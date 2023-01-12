@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+</head>
+
+<body>
+    <h2>JavaScript Classes</h2>
+    <p id="demo"></p>
+    <p id="demo2"></p>
+    <p id="demo3"></p>
+    <p id="demo4"></p>
+    <p id="demo5"></p>
+
+    <script>
+        class Galerie {
+            constructor(poleObrazu, poleAutoru) {
+                this.poleObrazu = poleObrazu;
+                this.poleAutoru = poleAutoru;
+            }
+        }
+
+        class Obraz {
+            constructor(Autor, nazev, cena, rokVzniku) {
+                this.Autor = Autor;
+                this.nazev = nazev;
+                this.cena = cena;
+                this.rokVzniku = rokVzniku;
+            }
+        }
+
+        class Autor {
+            constructor(jmeno, prijmeni, datNar) {
+                this.jmeno = jmeno;
+                this.prijmeni = prijmeni;
+                this.datNar = datNar;
+            }
+        }
+
+        let a1 = new Autor("Pavel", "Mracek", 2000);
+        let a2 = new Autor("David", "Prochazka", 1995);
+        let a3 = new Autor("Michal", "Cerny", 1995);
+        let a4 = new Autor("Jakub", "Novak", 1995);
+
+        let o1 = new Obraz(a1, "Vykrik", 10000, 2010);
+        let o2 = new Obraz(a2, "Neco", 2500, 2008);
+        let o3 = new Obraz(a3, "Hovno", 11000, 2008);
+        let o4 = new Obraz(a4, "Nic", 12500, 2008);
+
+        const array = [];
+        const arrayAutoru = [];
+
+        let g1 = new Galerie(array, arrayAutoru);
+
+        g1.poleObrazu.push(o1);
+        g1.poleObrazu.push(o2);
+        g1.poleObrazu.push(o3);
+        g1.poleObrazu.push(o4);
+
+        g1.poleAutoru.push(a1);
+        g1.poleAutoru.push(a2);
+        g1.poleAutoru.push(a3);
+        g1.poleAutoru.push(a4);
+
+
+
+        function celkovaCena() {
+            let soucet = 0;
+            for (let i = 0; i < g1.poleObrazu.length; i++) {
+                soucet += g1.poleObrazu[i].cena;
+            }
+            return soucet;
+        }
+
+        function autor() {
+            for (let i = 0; i < g1.poleAutoru.length; i++) {
+                document.getElementById("demo2").innerHTML += "Autor: " + g1.poleAutoru[i].jmeno + " " + g1.poleAutoru[i].prijmeni + "<br>";
+            }
+        }
+
+        document.getElementById("demo").innerHTML = "Celková cena: " + celkovaCena() + "Kč";
+
+        function print3largest(arr) {
+            let first, second, third;
+            let firstA, secondA, thirdA;
+
+            if (arr.length < 3) {
+                document.write(" Invalid Input ");
+                return;
+            }
+
+            third = first = second = Number.MIN_VALUE;
+            for (let i = 0; i < arr.length; i++) {
+
+                if (arr[i].cena > first) {
+                    third = second;
+                    second = first;
+                    first = arr[i].cena;
+                    thirdA = secondA;
+                    secondA = firstA;
+                    firstA = arrayAutoru[i].jmeno;
+                }
+
+                else if (arr[i].cena > second) {
+                    third = second;
+                    second = arr[i].cena;
+                    thirdA = secondA;
+                    secondA = arrayAutoru[i].jmeno;
+                }
+
+                else if (arr[i].cena > third) {
+                    third = arr[i].cena;
+                    thirdA = arrayAutoru[i].jmeno;
+                }
+            }
+
+            document.getElementById("demo3").innerHTML += "Cena tří nejdražších obrazu v galerii: "
+                + "<br>" + "Autor: " + firstA + ", " + first + "Kč <br>" + "Autor: " + secondA + ", " + second + "Kč <br>"
+                + "Autor: " + thirdA + ", " + third + "Kč " + "<br>";
+        }
+
+        print3largest(g1.poleObrazu);
+
+
+        function zadanyAutor(autor) {
+            let filterObrazy = g1.poleObrazu.filter(obraz => obraz.Autor == autor).sort((a, b) => b.cena - a.cena);
+            let result = [];
+            filterObrazy.forEach(obraz => {
+                var item = {};
+                item["nazev"] = obraz.nazev;
+                item["cena"] = obraz.cena;
+                item["autor"] = obraz.Autor;
+                result.push(item);
+                document.getElementById("demo4").innerHTML += "Autor: " + autor.jmeno + " " + autor.prijmeni + ", dílo: " + obraz.nazev + ", cena: " + obraz.cena + "Kč";
+            });
+            return result;
+        }
+        console.log(zadanyAutor(a2));
+
+
+        function autori() {
+            for (let i = 0; i < g1.poleAutoru.length; i++) {
+                document.getElementById("demo5").innerHTML += "Autor: " + g1.poleAutoru[i].jmeno + " " + g1.poleAutoru[i].prijmeni + ", dílo: " + g1.poleObrazu[i].nazev + ", cena: " + g1.poleObrazu[i].cena + "Kč <br>";
+            }
+        }
+        autori();
+    </script>
+</body>
+
+</html>
